@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Chat.API</name>
+    </assembly>
+    <members>
+        <member name="M:Chat.API.Controllers.ChatController.Access(System.Int64,System.String)">
+            <summary>
+            Verify access to chat
+            </summary>
+            <param name="chatId">Chat's identifier</param>
+            <param name="username">User's nick name</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.IsExist(System.Int64)">
+            <summary>
+            Verify access to chat
+            </summary>
+            <param name="chatId">Chat's identifier</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.GetChat(System.Int64)">
+            <summary>
+            Get chat's informations
+            </summary>
+            <param name="chatId">Chat's identifier</param>
+            <returns>Return 200 status code with ViewChatDTO</returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.GetUserChats">
+            <summary>
+            Get all User's chats
+            </summary>
+            <returns>ContentDTO include ViewChatDTO</returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.GetUsersFromChat(System.Int64)">
+            <summary>
+            Get all users from specific Chat
+            </summary>
+            <param name="chatId">Chat's identifier</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.CreateChat(Common.Domain.DTOs.ChatDTOs.CreateChatDTO)">
+            <summary>
+            Create Chat
+            </summary>
+            <param name="createChatDTO"> Chat's DTO for creating Chat</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.AddUserToChat(System.Int64,System.String)">
+            <summary>
+            Add user to specific chat
+            </summary>
+            <param name="targetUsername">The username you want to add</param>
+            <param name="chatId">Chat's identifier</param>
+            <returns>True: seccess; Flase: Fail</returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.RemoveUserFromChat(System.Int64,System.String)">
+            <summary>
+            Remove user from specific chat
+            </summary>
+            <param name="targetUsername">The username you want to remove</param>
+            <param name="chatId">Chat's identifier</param>
+            <returns>True: seccess; Flase: Fail</returns>
+        </member>
+        <member name="M:Chat.API.Controllers.ChatController.RemoveChat(System.Int64)">
+            <summary>
+            Remove chat
+            </summary>
+            <param name="chatId">Chat's identifier</param>
+            <returns>True: seccess; Flase: Fail</returns>
+        </member>
+        <member name="T:Chat.API.Controllers.MessageController">
+            <summary>
+            Message controller
+            </summary>
+        </member>
+        <member name="M:Chat.API.Controllers.MessageController.Send(Common.Domain.DTOs.MessageDTOs.CreateMessageDTO)">
+            <summary>
+            Send message to chat
+            </summary>
+            <param name="createMessageDTO">DTO for message</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.API.Controllers.MessageController.GetMessages(Chat.Domain.DTOs.FiltersDTO.MessageFilterModel)">
+            <summary>
+            Get messages 
+            </summary>
+            <param name="messageFilter"> Filter model</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

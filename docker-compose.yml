@@ -1,0 +1,86 @@
+version: '3.4'
+
+services:
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    restart: always
+    build:
+      context: .
+      dockerfile: Chat.IdentityService/Identity.API/Dockerfile
+    environment:
+      - Authority=http://109.201.239.30:5443
+      - OAuthOptions__AuthServer=http://109.201.239.30:5443
+      - SwaggerOptions__AuthServer=http://109.201.239.30:5080
+      - ConnectionStrings__DefaultConnection=server=mysql;UserId=root;Password=159753;database=Identity
+    ports:
+      - 5080:80
+      - 5443:443
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  chat.api:
+    image: ${DOCKER_REGISTRY-}chatapi
+    restart: always
+    build:
+      context: .
+      dockerfile: Chat.ChatService/Chat.API/Dockerfile
+    environment:
+      - OAuthOptions__AuthServer=http://109.201.239.30:5443
+      - SwaggerOptions__AuthServer=http://109.201.239.30:5080
+      - Authority=http://109.201.239.30:5443
+      - RabbitMQOptions__HostName=rabbitmq
+      - RabbitMQOptions__UserName=guest
+      - RabbitMQOptions__Password=guest
+      - ConnectionStrings__DefaultConnection=server=mysql;UserId=root;Password=159753;database=Chat
+    ports:
+      - 6080:80
+      - 6443:443
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  realtime.api:
+    image: ${DOCKER_REGISTRY-}realtimeapi
+    restart: always
+    build:
+      context: .
+      dockerfile: Chat.RealtimeChatService/Realtime.API/Dockerfile
+    environment:
+      - OAuthOptions__AuthServer=http://109.201.239.30:5443
+      - SwaggerOptions__AuthServer=http://109.201.239.30:5080
+      - Authority=http://109.201.239.30:5443
+      - RabbitMQOptions__HostName=rabbitmq
+      - RabbitMQOptions__UserName=guest
+      - RabbitMQOptions__Password=guest
+      - HttpServiceOptions__ChatApi=http://109.201.239.30:6443
+    ports:
+      - 7080:80
+      - 7443:443
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 159753
+    cap_add:
+      - SYS_NICE

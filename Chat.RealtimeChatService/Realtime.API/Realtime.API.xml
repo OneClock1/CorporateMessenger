@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Realtime.API</name>
+    </assembly>
+    <members>
+        <member name="M:Realtime.API.Controllers.RealtimeController.GetConnectionId">
+            <summary>
+            Get Connection Id
+            </summary>
+            <returns>Connection Id Guid</returns>
+        </member>
+    </members>
+</doc>
