@@ -8,8 +8,8 @@ services:
       context: .
       dockerfile: Chat.IdentityService/Identity.API/Dockerfile
     environment: 
-      - Authority=20.234.16.15
-      - OAuthOptions__AuthServer=http://20.234.16.15:5443
+      - Authority=identity.api
+      - OAuthOptions__AuthServer=http://identity.api:80
       - SwaggerOptions__AuthServer=http://20.234.16.15:5080
       - ConnectionStrings__DefaultConnection=server=mysql;UserId=root;Password=159753;database=Identity
     ports:
@@ -26,9 +26,9 @@ services:
       context: .
       dockerfile: Chat.ChatService/Chat.API/Dockerfile
     environment: 
-      - OAuthOptions__AuthServer=http://20.234.16.15:5443
+      - OAuthOptions__AuthServer=http://identity.api:80
       - SwaggerOptions__AuthServer=http://20.234.16.15:5080
-      - Authority=20.234.16.15
+      - Authority=identity.api
       - RabbitMQOptions__HostName=rabbitmq
       - RabbitMQOptions__UserName=guest
       - RabbitMQOptions__Password=guest
@@ -47,9 +47,9 @@ services:
       context: .
       dockerfile: Chat.RealtimeChatService/Realtime.API/Dockerfile
     environment: 
-      - OAuthOptions__AuthServer=http://20.234.16.15:5443
+      - OAuthOptions__AuthServer=http://identity.api:80
       - SwaggerOptions__AuthServer=http://20.234.16.15:5080
-      - Authority=20.234.16.15
+      - Authority=identity.api
       - RabbitMQOptions__HostName=rabbitmq
       - RabbitMQOptions__UserName=guest
       - RabbitMQOptions__Password=guest
